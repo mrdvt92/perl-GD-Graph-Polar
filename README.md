@@ -5,7 +5,7 @@ GD::Graph::Polar - Perl package to create polar graphs using GD package
 # SYNOPSIS
 
     use GD::Graph::Polar;
-    my $obj=GD::Graph::Polar->new(size=>480, radius=>100);
+    my $obj = GD::Graph::Polar->new(size=>480, radius=>100);
     $obj->addPoint        (50=>25);
     $obj->addPoint_rad    (50=>3.1415);
     $obj->addGeoPoint     (75=>25);
