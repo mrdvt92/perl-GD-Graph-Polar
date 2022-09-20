@@ -11,7 +11,7 @@ our $VERSION = '0.18';
 
 =head1 NAME
 
-GD::Graph::Polar - Make polar graph using GD package
+GD::Graph::Polar - Perl package to create polar graphs using GD package
 
 =head1 SYNOPSIS
 
