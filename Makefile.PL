@@ -10,7 +10,6 @@ WriteMakefile(
                     'Test::Simple'      => 0.44, #test req
                     'List::Util'        => 0,
                     'Package::New'      => 0,
-                    'Path::Class'       => 0,    #tests
                    #'Graphics::ColorNames'=>0, #no longer required but nice to have
                    },
   'META_MERGE' => {

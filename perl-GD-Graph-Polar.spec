@@ -1,5 +1,5 @@
 Name:           perl-GD-Graph-Polar
-Version:        0.18
+Version:        0.19
 Release:        1%{?dist}
 Summary:        Make polar graph using GD package
 License:        perl
@@ -11,7 +11,6 @@ BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Test::Simple) >= 0.44
 BuildRequires:  perl(Graphics::ColorNames)
-BuildRequires:  perl(Path::Class)
 BuildRequires:  perl(GD)
 BuildRequires:  perl(Geo::Constants) >= 0.04
 BuildRequires:  perl(Geo::Functions) >= 0.03

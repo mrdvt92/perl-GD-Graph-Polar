@@ -19,3 +19,4 @@ addString
 gcnames
 gdimage
 rgbfile
+gdSmallFont

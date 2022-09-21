@@ -7,7 +7,7 @@ use Geo::Functions qw{rad_deg};
 use GD qw{gdSmallFont};
 use List::Util qw{first};
 
-our $VERSION = '0.18';
+our $VERSION = '0.19';
 
 =head1 NAME
 
@@ -40,7 +40,7 @@ GD::Graph::Polar - Perl package to create polar graphs using GD package
 
 =head1 DESCRIPTION
 
-This package is a wrapper around GD to produce polar graphs with an easy interface.  I use this package to display GPS satellites on a graph with data from the L<Net::GPSD3> package.
+This package is a wrapper around GD to produce polar graphs with an easy interface.  I use this package to plot antenna patterns on a graph with data from the L<RF::Antenna::Planet::MSI::Format> package.
 
 =head1 CONSTRUCTOR
 
@@ -378,7 +378,7 @@ sub gdimage {
 
 =head2 gcnames
 
-Returns a L<Graphics::ColorNames> object
+Returns a L<Graphics::ColorNames> object.
 
 =cut
 
@@ -405,6 +405,8 @@ Method to set or return the current drawing color
   my $colorobj = $obj->color("blue");     #if Graphics::ColorNames available
   my $colorobj = $obj->color([77,82,68]); #rgb=>[decimal,decimal,decimal]
   my $colorobj = $obj->color;
+
+Default: [0,0,0] (i.e., black)
 
 =cut
 
@@ -436,6 +438,8 @@ Method to set or return the current drawing font (only needed by the very few)
   $obj->font(gdSmallFont); #the default
   $obj->font;
 
+Default: gdSmallFont
+
 =cut
 
 sub font {
@@ -447,7 +451,9 @@ sub font {
 
 =head2 size
 
-Sets or returns the width and height of the graph in pixels.
+Sets or returns the width and height of the image in pixels.
+
+Default: 480
 
 =cut
 
@@ -460,7 +466,9 @@ sub size {
 
 =head2 radius
 
-Sets or returns the radius of the Graph
+Sets or returns the radius of the graph which sets the scale of the maximum value of the graph.
+
+Default: 1
 
 =cut
 
@@ -473,6 +481,10 @@ sub radius {
 
 =head2 border
 
+Sets and returns the number of pixels that border the graph on the image.
+
+Default: 2
+
 =cut
 
 sub border {
@@ -483,6 +495,10 @@ sub border {
 }
 
 =head2 ticks
+
+Sets and returns the number of ticks on the graph.
+
+Default: 10
 
 =cut
 

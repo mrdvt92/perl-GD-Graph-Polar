@@ -1,5 +1,9 @@
 Changes for package GD-Graph-Polar
 
+0.19 2022-09-20
+  - Fixed tests logic for CPAN testers - GitHub #1 - Slaven Rezić
+  - Updated Documentation
+
 0.18 2022-09-20
   - Changed license to MIT
   - Added GitHub repo information
