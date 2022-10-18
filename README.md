@@ -6,26 +6,26 @@ GD::Graph::Polar - Perl package to create polar graphs using GD package
 
     use GD::Graph::Polar;
     my $obj = GD::Graph::Polar->new(size=>480, radius=>100);
-    $obj->addPoint        (50=>25);
-    $obj->addPoint_rad    (50=>3.1415);
-    $obj->addGeoPoint     (75=>25);
-    $obj->addGeoPoint_rad (75=>3.1415);
-    $obj->addLine($r0=>$t0, $r1=>$t1);
-    $obj->addLine_rad($r0=>$t0, $r1=>$t1);
-    $obj->addGeoLine($r0=>$t0, $r1=>$t1);
-    $obj->addGeoLine_rad($r0=>$t0, $r1=>$t1);
-    $obj->addArc($r0=>$t0, $r1=>$t1);
-    $obj->addArc_rad($r0=>$t0, $r1=>$t1);
-    $obj->addGeoArc($r0=>$t0, $r1=>$t1);
-    $obj->addGeoArc_rad($r0=>$t0, $r1=>$t1);
-    $obj->addString($r=>$t, "Hello World!");
-    $obj->addString_rad($r=>$t, "Hello World!");
-    $obj->addGeoString($r=>$t, "Hello World!");
-    $obj->addGeoString_rad($r=>$t, "Hello World!");
+    $obj->addPoint(50=>25);                                  #radius => angle (e.g. polar form of complex number notation)
+    $obj->addPoint_rad(50=>3.1415);
+    $obj->addGeoPoint(75=>25);
+    $obj->addGeoPoint_rad(75=>3.1415);
+    $obj->addLine($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addLine_rad($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addGeoLine($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addGeoLine_rad($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addArc($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addArc_rad($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addGeoArc($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addGeoArc_rad($radius0=>$theta0, $radius1=>$theta1);
+    $obj->addString($radius=>$theta, "Hello World!");
+    $obj->addString_rad($radius=>$theta, "Hello World!");
+    $obj->addGeoString($radius=>$theta, "Hello World!");
+    $obj->addGeoString_rad($radius=>$theta, "Hello World!");
     $obj->font(gdSmallFont);  #sets the current font from GD exports
     $obj->color("blue");      #sets the current color from Graphics::ColorNames
     $obj->color([0,0,0]);     #sets the current color [red,green,blue]
-    print $obj->draw;
+    print $obj->draw; #PNG image
 
 # DESCRIPTION
 
@@ -38,11 +38,12 @@ This package is a wrapper around GD to produce polar graphs with an easy interfa
 The new constructor. 
 
     my $obj = GD::Graph::Polar->new(           #default values
-                                    size    => 480,    #width and height in pixels
-                                    radius  => 1,      #scale of the radius
-                                    ticks   => 10,     #number of major ticks
-                                    border  => 2,      #pixel border around graph
-                                    rgbfile => "/usr/X11R6/lib/X11/rgb.txt"
+                                    size          => 480,    #width and height in pixels
+                                    radius        => 1,      #max value of the radius
+                                    radius_origin => 0,      #value at the origin
+                                    ticks         => 10,     #number of major ticks
+                                    border        => 2,      #pixel border around graph
+                                    rgbfile       => "/usr/X11R6/lib/X11/rgb.txt"
                                    );
 
 # METHODS
@@ -179,6 +180,12 @@ Sets or returns the radius of the graph which sets the scale of the maximum valu
 
 Default: 1
 
+## radius\_origin
+
+Sets or returns the radius origin of the graph which sets the value scale at the origin of the graph.
+
+Default: 0
+
 ## border
 
 Sets and returns the number of pixels that border the graph on the image.
@@ -190,6 +197,12 @@ Default: 2
 Sets and returns the number of ticks on the graph.
 
 Default: 10
+
+## axes
+
+Sets and returns the number of axes (plural of axis) on the graph.
+
+Default: 4
 
 ## rgbfile
 
