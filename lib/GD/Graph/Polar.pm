@@ -7,7 +7,7 @@ use Geo::Constants qw{PI};
 use Geo::Functions qw{rad_deg};
 use GD qw{gdSmallFont};
 
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 =head1 NAME
 
@@ -226,14 +226,14 @@ sub addArc_rad {
   my $inc     = 0.02; #is this good?
   my $steps   = int(($theta1-$theta0) / $inc);
   my @array   = ();
-  foreach (0 .. $steps) {
-    my $theta  = $_ / $steps * ($theta1-$theta0) + $theta0;
+  foreach my $step (0 .. $steps) {
+    my $theta  = $step / $steps * ($theta1-$theta0) + $theta0;
     my $radius = $radius0 + $m * ($theta-$theta0);
     push @array, [$radius=>$theta];
   } 
   my @return = ();
-  foreach (1 .. $steps) {
-    push @return, $self->addLine_rad(@{$array[$_-1]}, @{$array[$_]});
+  foreach my $step (1 .. $steps) {
+    push @return, $self->addLine_rad(@{$array[$step-1]}, @{$array[$step]});
   }
   return \@return;
 }
@@ -350,26 +350,26 @@ sub gdimage {
     # Put a frame around the picture
     $self->gdimage->rectangle(0, 0, $self->size - 1, $self->size - 1, $self->color([0,0,0]));
   
+    #Add concentric circles around origin ticks is number of circles
     if ($self->ticks > 0) {
       $self->color([192,192,192]);
-      foreach (0 .. $self->ticks) {
+      foreach my $tick (1 .. $self->ticks) {
         my $c = $self->size / 2;
-        my $r = $self->_width * $_ / $self->ticks;
+        my $r = $self->_width * $tick / $self->ticks;
         $self->gdimage->arc($c,$c,$r,$r,0,360,$self->color);
       }
     }
   
-    $self->color([192,192,192]);
-    $self->gdimage->line($self->size/2,
-                            $self->border,
-                            $self->size/2,
-                            $self->size-$self->border,
-                            $self->color);
-    $self->gdimage->line($self->border,
-                            $self->size/2,
-                            $self->size-$self->border,
-                            $self->size/2,
-                            $self->color);
+    #Add radiating lines around origin axes is number of lines
+    if ($self->axes > 0) {
+      $self->color([192,192,192]);
+      my $delta = 360 / $self->axes;
+      my $angle = 0;
+      while ($angle < 360) {
+        $self->addLine($self->radius_origin, $angle, $self->radius, $angle);
+        $angle += $delta;
+      }
+    }
 
     #default to black pen color
     $self->color([0,0,0]);
@@ -526,6 +526,22 @@ sub ticks {
   return $self->{'ticks'};
 }
 
+=head2 axes
+
+Sets and returns the number of axes (plural of axis) on the graph.
+
+Default: 4
+
+=cut
+
+sub axes {
+  my $self        = shift;
+  $self->{'axes'} = shift if @_;
+  $self->{'axes'} = 4 unless defined $self->{'axes'};
+  return $self->{'axes'};
+}
+
+
 =head2 rgbfile
 
 Sets or returns an RGB file.
@@ -539,9 +555,9 @@ sub rgbfile {
   $self->{'rgbfile'} = shift if @_;
   unless (defined $self->{'rgbfile'}) {
     my $cwd = Cwd::getcwd();
-    foreach ('/etc/X11/rgb.txt', '/usr/share/X11/rgb.txt', '/usr/X11R6/lib/X11/rgb.txt', "$cwd/rgb.txt", "$cwd/../rgb.txt") {
-      next unless -r;
-      $self->{'rgbfile'} = $_;
+    foreach my $dir ('/etc/X11/rgb.txt', '/usr/share/X11/rgb.txt', '/usr/X11R6/lib/X11/rgb.txt', "$cwd/rgb.txt", "$cwd/../rgb.txt") {
+      next unless -r $dir; 
+      $self->{'rgbfile'} = $dir;
       last;
     }
   }
